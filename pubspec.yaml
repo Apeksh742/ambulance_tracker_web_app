@@ -23,7 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.1
   dotted_border: ^1.0.7
   firebase: ^7.3.3
   firebase_auth: ^0.18.3+1
