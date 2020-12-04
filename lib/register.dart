@@ -8,7 +8,7 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
         body: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(

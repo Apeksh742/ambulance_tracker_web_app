@@ -24,12 +24,18 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.1
+  dotted_border: ^1.0.7
   firebase: ^7.3.3
   firebase_auth: ^0.18.3+1
   firebase_auth_web: ^0.3.2+1
   firebase_dart: ^0.7.15+4
   flutter_spinkit: ^4.1.2+1
   fluttertoast: ^7.1.5
+  google_fonts: ^1.1.1
+  image_picker_web_redux: ^1.1.3
+  image_whisperer: ^0.11.1
+  material_design_icons_flutter: ^4.0.5755
+  uuid: ^2.2.2
 
 dev_dependencies:
   flutter_test:
