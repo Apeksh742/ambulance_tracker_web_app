@@ -35,6 +35,7 @@ dependencies:
   image_whisperer: ^0.11.1
   material_design_icons_flutter: ^4.0.5755
   uuid: ^2.2.2
+  location: ^3.1.0
 
 dev_dependencies:
   flutter_test:

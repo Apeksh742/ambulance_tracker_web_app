@@ -1,14 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:location/location.dart';
 
 import 'auth_stream.dart';
 
+class RegisterScreen extends StatefulWidget {
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
 
-class RegisterScreen extends StatelessWidget {
+class _RegisterScreenState extends State<RegisterScreen> {
+  LocationData _locationData;
+  getPermissionStatus() async {
+    Location location = new Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+  }
+
+  Location location = new Location();
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController passController = TextEditingController();
   @override
+  void initState() {
+    getPermissionStatus();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
         body: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
@@ -48,9 +89,16 @@ class RegisterScreen extends StatelessWidget {
                 )),
             FlatButton(
                 onPressed: () {
-                  print(emailController.text);
-                  AuthService().registerWithEmail(
-                      emailController.text, passController.text, context);
+                  if (_locationData != null) {
+                    AuthService().registerWithEmail(
+                        emailController.text,
+                        passController.text,
+                        context,
+                        _locationData.latitude,
+                        _locationData.longitude);
+                  } else {
+                    Fluttertoast.showToast(msg: 'please allow for location');
+                  }
                 },
                 child: Text('Sign in'))
           ],

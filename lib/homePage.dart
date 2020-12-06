@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dart/firebase_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:web_app/addDriver.dart';
+import 'package:web_app/models/driver.dart';
 
 import 'addDriver.dart';
 
@@ -9,6 +10,8 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+
+List<Driver> drivers = [];
 
 class _HomeState extends State<Home> {
   bool approveStatus = false;
@@ -29,9 +32,40 @@ class _HomeState extends State<Home> {
     });
   }
 
+  getUsers() {
+    final user = FirebaseAuth.instance.currentUser;
+    final ref = Reference('https://ambulancetracker-bea10.firebaseio.com')
+        .child('AdminAccess')
+        .child(user.uid)
+        .child('ambulances');
+    ref.onValue.listen((event) {
+      final snapShot = event.snapshot.val as Map;
+      if (snapShot != null) {
+        drivers = [];
+        snapShot.forEach((key, value) {
+          drivers.add(Driver(
+            id: key,
+            ambulanceNo: value['ambulanceNo'],
+            approvalStat: value['approveStatus'],
+            email: value['email'],
+            imageUrl: value['imageUrl'],
+            name: value['name'],
+            status: value['Status'],
+            type: value['typeOfAmbulance']
+          ));
+        });
+
+        setState(() {
+          
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     getStatus();
+    getUsers();
     super.initState();
   }
 

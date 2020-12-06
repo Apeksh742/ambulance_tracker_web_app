@@ -31,7 +31,7 @@ class AuthService {
     });
   }
 
-  registerWithEmail(String email, String password, BuildContext context) {
+  registerWithEmail(String email, String password, BuildContext context,double lat,double long) {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) {
@@ -40,6 +40,8 @@ class AuthService {
           Reference('https://ambulancetracker-bea10.firebaseio.com/AdminAccess/$user');
       ref.update({
         'AproveStatus': false,
+        'lat':lat,
+        'long':long
       }).then((value) => Navigator.of(context).pop(context));
     });
   }
