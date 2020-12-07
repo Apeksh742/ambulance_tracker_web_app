@@ -41,6 +41,8 @@ class _HomeState extends State<Home> {
     ref.onValue.listen((event) {
       final snapShot = event.snapshot.val as Map;
       if (snapShot != null) {
+        print("Snapshot available");
+        print("Snapshot Data : $snapShot");
         drivers = [];
         snapShot.forEach((key, value) {
           drivers.add(Driver(
@@ -58,6 +60,7 @@ class _HomeState extends State<Home> {
         setState(() {
           
         });
+        
       }
     });
   }
@@ -124,7 +127,32 @@ class _HomeState extends State<Home> {
               ],
             ),
             body: Center(
-              child: Text('welcome to ice'),
+              child: ListView.builder(
+                itemCount: drivers.length,
+                itemBuilder: (BuildContext context, index){
+                  return Card(
+                    child: ListTile(
+                      leading: Text(drivers[index].status,style: TextStyle(fontWeight: FontWeight.bold),),
+                      title: Row(children: [Text("Name of Driver: ${drivers[index].name}" ),Text("Ambulance No. : ${drivers[index].ambulanceNo}" ),],mainAxisAlignment: MainAxisAlignment.spaceEvenly,),
+                      subtitle: Column(
+                        children: [
+                          Container(
+                            height: 200,width: 200,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(image: NetworkImage(drivers[index].imageUrl),fit: BoxFit.contain),
+                            ),
+                          ),
+                          Text("E-mail: ${drivers[index].email}"),
+
+                          Text("Id: ${drivers[index].id}"),
+                          Text("Type of Ambulance: ${drivers[index].type}"),
+                        ], 
+                      ),
+                      trailing: Text(drivers[index].approvalStat.toString(),style: TextStyle(fontWeight: FontWeight.bold),),       
+                    ),
+                  );
+                },
+              ),            
             ),
           );
   }

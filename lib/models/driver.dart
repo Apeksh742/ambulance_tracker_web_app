@@ -2,7 +2,7 @@ class Driver {
   final String id;
   final String name;
   final String type;
-  final bool status;
+  final String status;
   final String ambulanceNo;
   final String email;
   final String imageUrl;
