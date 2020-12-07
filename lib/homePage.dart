@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dart/firebase_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:web_app/addDriver.dart';
 import 'package:web_app/models/driver.dart';
 
@@ -46,21 +48,17 @@ class _HomeState extends State<Home> {
         drivers = [];
         snapShot.forEach((key, value) {
           drivers.add(Driver(
-            id: key,
-            ambulanceNo: value['ambulanceNo'],
-            approvalStat: value['approveStatus'],
-            email: value['email'],
-            imageUrl: value['imageUrl'],
-            name: value['name'],
-            status: value['Status'],
-            type: value['typeOfAmbulance']
-          ));
+              id: key,
+              ambulanceNo: value['ambulanceNo'],
+              approvalStat: value['approveStatus'],
+              email: value['email'],
+              imageUrl: value['imageUrl'],
+              name: value['name'],
+              status: value['Status'],
+              type: value['typeOfAmbulance']));
         });
 
-        setState(() {
-          
-        });
-        
+        setState(() {});
       }
     });
   }
@@ -126,33 +124,99 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
-            body: Center(
-              child: ListView.builder(
-                itemCount: drivers.length,
-                itemBuilder: (BuildContext context, index){
-                  return Card(
-                    child: ListTile(
-                      leading: Text(drivers[index].status,style: TextStyle(fontWeight: FontWeight.bold),),
-                      title: Row(children: [Text("Name of Driver: ${drivers[index].name}" ),Text("Ambulance No. : ${drivers[index].ambulanceNo}" ),],mainAxisAlignment: MainAxisAlignment.spaceEvenly,),
-                      subtitle: Column(
-                        children: [
-                          Container(
-                            height: 200,width: 200,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(image: NetworkImage(drivers[index].imageUrl),fit: BoxFit.contain),
-                            ),
-                          ),
-                          Text("E-mail: ${drivers[index].email}"),
+            body: Card(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    child: DataTable(
+                      horizontalMargin: 0,
+                      // horizontalMargin: 5,
+                      columnSpacing: 0,
 
-                          Text("Id: ${drivers[index].id}"),
-                          Text("Type of Ambulance: ${drivers[index].type}"),
-                        ], 
-                      ),
-                      trailing: Text(drivers[index].approvalStat.toString(),style: TextStyle(fontWeight: FontWeight.bold),),       
+
+                      showBottomBorder: true,
+                      columns: [
+                        DataColumn(
+                          label: Container(
+                              width: MediaQuery.of(context).size.width * .2,
+                              height: 100,
+                              decoration:
+                                  BoxDecoration(color: HexColor('afeeee')),
+                              child: Center(
+                                  child: Text('Id',
+                                      style: GoogleFonts.workSans(
+                                          fontWeight: FontWeight.bold)))),
+                        ),
+                        DataColumn(
+                          label: Container(
+                              width: MediaQuery.of(context).size.width * .2,
+                              height: 100,
+                              decoration:
+                                  BoxDecoration(color: HexColor('afeeee')),
+                              child: Center(
+                                  child: Text('Image',
+                                      style: GoogleFonts.workSans(
+                                          fontWeight: FontWeight.bold)))),
+                        ),
+                        DataColumn(
+                          label: Container(
+                              width: MediaQuery.of(context).size.width * .2,
+                              height: 100,
+                              decoration:
+                                  BoxDecoration(color: HexColor('afeeee')),
+                              child: Center(
+                                  child: Text('Status',
+                                      style: GoogleFonts.workSans(
+                                          fontWeight: FontWeight.bold)))),
+                        ),
+                        DataColumn(
+                          label: Container(
+                              width: MediaQuery.of(context).size.width * .2,
+                              height: 100,
+                              decoration:
+                                  BoxDecoration(color: HexColor('afeeee')),
+                              child: Center(
+                                  child: Text('Email',
+                                      style: GoogleFonts.workSans(
+                                          fontWeight: FontWeight.bold)))),
+                        ),
+                        DataColumn(
+                          label: Container(
+                              width: MediaQuery.of(context).size.width * .2,
+                              height: 100,
+                              decoration:
+                                  BoxDecoration(color: HexColor('afeeee')),
+                              child: Center(
+                                  child: Text('Type',
+                                      style: GoogleFonts.workSans(
+                                          fontWeight: FontWeight.bold)))),
+                        ),
+                      ],
+                      rows: drivers.map((e) {
+                        return DataRow(cells: [
+                          DataCell(Center(child: Text(e.name))),
+                          DataCell(Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Container(
+                                  height: 100,
+                                  width: 100,
+                                  child: Image.network(e.imageUrl)),
+                            ),
+                          )),
+                          DataCell(
+                            Center(child: Text(e.status.toString())),
+                          ),
+                          DataCell(Center(child: Text(e.email.toString()))),
+                          DataCell(Center(child: Text(e.type.toString())))
+                        ]);
+                      }).toList(),
                     ),
-                  );
-                },
-              ),            
+                  ),
+                ),
+              ),
             ),
           );
   }
