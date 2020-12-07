@@ -63,6 +63,20 @@ class _HomeState extends State<Home> {
     });
   }
 
+  showPopup() {
+    showDialog(
+        context: context,
+        child: AlertDialog(
+          actions: [
+            
+          ],
+          content: Container(
+            height: MediaQuery.of(context).size.height * .6,
+            width: MediaQuery.of(context).size.height * .6,
+          ),
+        ));
+  }
+
   @override
   void initState() {
     getStatus();
@@ -115,6 +129,15 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: InkWell(
+                    child: Icon(Icons.add_alert),
+                    onTap: () {
+                      showPopup();
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: InkWell(
                     child: Icon(Icons.add),
                     onTap: () {
                       Navigator.of(context).push(
@@ -134,8 +157,6 @@ class _HomeState extends State<Home> {
                       horizontalMargin: 0,
                       // horizontalMargin: 5,
                       columnSpacing: 0,
-
-
                       showBottomBorder: true,
                       columns: [
                         DataColumn(
