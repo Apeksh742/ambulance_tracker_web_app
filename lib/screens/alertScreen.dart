@@ -130,11 +130,12 @@ class _AlertScreenState extends State<AlertScreen> {
                                       .child('ambulances')
                                       .child(e.id)
                                       .child('req')
-                                      .child(users.id)
                                       .update({
+                                    'id': users.id,
                                     'Phone': users.phone,
                                     'lat': users.lat,
-                                    'long': users.long
+                                    'long': users.long,
+                                    'Status':'Pending'
                                   });
                                   Reference(
                                           'https://ambulancetracker-bea10.firebaseio.com/')

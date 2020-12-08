@@ -241,6 +241,7 @@ class _AddDriverState extends State<AddDriver> {
                                               .child("ambulances")
                                               .child(value.user.uid)
                                               .update({
+                                            'AdminId': hospitalUser.uid,
                                             'email': email,
                                             'name': name,
                                             'phone': mobileNo,
