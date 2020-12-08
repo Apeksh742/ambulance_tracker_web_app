@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:web_app/addDriver.dart';
 import 'package:web_app/models/driver.dart';
+import 'package:web_app/screens/alertScreen.dart';
 
 import 'addDriver.dart';
 
@@ -43,8 +44,6 @@ class _HomeState extends State<Home> {
     ref.onValue.listen((event) {
       final snapShot = event.snapshot.val as Map;
       if (snapShot != null) {
-        print("Snapshot available");
-        print("Snapshot Data : $snapShot");
         drivers = [];
         snapShot.forEach((key, value) {
           drivers.add(Driver(
@@ -64,17 +63,8 @@ class _HomeState extends State<Home> {
   }
 
   showPopup() {
-    showDialog(
-        context: context,
-        child: AlertDialog(
-          actions: [
-            
-          ],
-          content: Container(
-            height: MediaQuery.of(context).size.height * .6,
-            width: MediaQuery.of(context).size.height * .6,
-          ),
-        ));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => AlertScreen()));
   }
 
   @override
@@ -131,7 +121,10 @@ class _HomeState extends State<Home> {
                   child: InkWell(
                     child: Icon(Icons.add_alert),
                     onTap: () {
-                      showPopup();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AlertScreen(
+                                drivers: drivers,
+                              )));
                     },
                   ),
                 ),
