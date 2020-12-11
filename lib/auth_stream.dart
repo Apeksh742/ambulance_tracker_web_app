@@ -31,7 +31,7 @@ class AuthService {
     });
   }
 
-  registerWithEmail(String email, String password, BuildContext context,double lat,double long) {
+  registerWithEmail(String email, String password, String hospitalName, String hospitalAddress, String contactNo, BuildContext context,double lat,double long) {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) {
@@ -41,7 +41,11 @@ class AuthService {
       ref.update({
         'AproveStatus': false,
         'lat':lat,
-        'long':long
+        'long':long,
+        'HospialName': hospitalName,
+        'HospitalAddress': hospitalAddress,
+        'Contact No': contactNo,
+
       }).then((value) => Navigator.of(context).pop(context));
     });
   }
