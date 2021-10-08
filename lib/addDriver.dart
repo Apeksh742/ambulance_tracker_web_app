@@ -1,4 +1,5 @@
 import 'dart:html';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker_web_redux/image_picker_web_redux.dart';
 import 'package:image_whisperer/image_whisperer.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
 
 class AddDriver extends StatefulWidget {
   @override
